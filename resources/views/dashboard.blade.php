@@ -1,51 +1,71 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
+        <h2 class="font-semibold text-2xl text-blue-900">Panel de Control</h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow-sm sm:rounded-lg p-6 text-gray-900">
-                {{ __("You're logged in!") }}
+    <div class="py-12 bg-[#f0faff]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                <div class="mt-6 space-y-4">
-
-                    {{-- ADMIN --}}
-                    @role('admin')
-                        <div>
-                            <a href="{{ route('usuarios.index') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Gestionar Usuarios</a>
-                        </div>
-                    @endrole
-
-                    {{-- SECRE --}}
-                    @role('secre')
-                        <div>
-                            <a href="{{ route('usuarios.index') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Ver Usuarios</a>
-                            <a href="{{ route('usuarios.create') }}" class="bg-green-500 text-white px-4 py-2 rounded">Crear Usuario</a>
-                        </div>
-                    @endrole
-
-                    {{-- BODEGA --}}
-                    @role('bodega')
-                        <div>
-                            <a href="{{ route('categorias.index') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Categorías</a>
-                            <a href="{{ route('productos.index') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Productos</a>
-                        </div>
-                    @endrole
-
-                    {{-- CAJERA --}}
-                    @role('cajera')
-                        <div>
-                            <a href="{{ route('ventas.index') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Mis Ventas</a>
-                            <a href="{{ route('ventas.create') }}" class="bg-green-500 text-white px-4 py-2 rounded">Registrar Venta</a>
-                        </div>
-                    @endrole
-
+                {{-- ADMIN --}}
+                @role('admin')
+                <div class="bg-white border border-blue-100 shadow-md hover:shadow-xl rounded-lg p-6 transition duration-300">
+                    <h3 class="text-lg font-semibold text-blue-800 mb-4">Administración</h3>
+                    <a href="{{ route('usuarios.index') }}" 
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition">
+                        Gestionar Usuarios
+                    </a>
                 </div>
+                @endrole
+
+                {{-- SECRE --}}
+                @role('secre')
+                <div class="bg-white border border-blue-100 shadow-md hover:shadow-xl rounded-lg p-6 transition duration-300">
+                    <h3 class="text-lg font-semibold text-blue-800 mb-4">Usuarios</h3>
+                    <div class="space-x-2">
+                        <a href="{{ route('usuarios.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition">
+                            Ver Usuarios
+                        </a>
+                        <a href="{{ route('usuarios.create') }}" 
+                        class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded transition">
+                        Crear Usuario
+                        </a>
+                    </div>
+                </div>
+                @endrole
+                {{-- BODEGA --}}
+                @role('bodega')
+                <div class="bg-white border border-blue-100 shadow-md hover:shadow-xl rounded-lg p-6 transition duration-300">
+                    <h3 class="text-lg font-semibold text-blue-800 mb-4">Inventario</h3>
+                    <div class="space-x-2">
+                        <a href="{{ route('categorias.index') }}" 
+                        class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition">
+                        Categorías
+                        </a>
+                        <a href="{{ route('productos.index') }}" 
+                        class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded transition">
+                        Productos
+                        </a>
+                    </div>
+                </div>
+                @endrole
+
+                {{-- CAJERA --}}
+                <div class="bg-white border border-blue-100 shadow-md hover:shadow-xl rounded-lg p-6 transition duration-300">
+                    <h3 class="text-lg font-semibold text-blue-800 mb-4">Ventas</h3>
+                    <div class="space-x-2">
+                        <a href="{{ route('ventas.index') }}" 
+                        class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition">
+                            Mis Ventas
+                        </a>
+                        <a href="{{ route('ventas.create') }}" 
+                        class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded transition">
+                            Registrar Venta
+                        </a>
+                    </div>
+                </div>
+                @role('cajera')
             </div>
         </div>
     </div>
-    <div>xd</div>
 </x-app-layout>
