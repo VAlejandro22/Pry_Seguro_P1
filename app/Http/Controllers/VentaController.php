@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Venta;
 use App\Models\VentaProducto;
+use App\Models\Producto;
+
 
 class VentaController extends Controller
 {
@@ -13,42 +15,43 @@ class VentaController extends Controller
      */
     public function index()
     {
-        //
+        $ventas = Venta::with('productos.producto')->where('user_id', auth()->id())->get();
+        return view('ventas.index', compact('ventas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $productos = Producto::where('stock', '>', 0)->get();
+        return view('ventas.create', compact('productos'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
-{
-    $request->validate([
-        'productos' => 'required|array',
-        'productos.*.id' => 'exists:productos,id',
-        'productos.*.cantidad' => 'required|integer|min:1'
-    ]);
-
-    $venta = Venta::create([
-        'user_id' => auth()->id(),
-    ]);
-
-    foreach ($request->productos as $item) {
-        VentaProducto::create([
-            'venta_id' => $venta->id,
-            'producto_id' => $item['id'],
-            'cantidad' => $item['cantidad'],
+    {
+        $data = $request->validate([
+            'productos' => 'required|array',
+            'productos.*.cantidad' => 'required|integer|min:1',
         ]);
-    }
 
-    return redirect()->route('ventas.index');
-}
+        $venta = Venta::create(['user_id' => auth()->id()]);
+
+        foreach ($data['productos'] as $producto_id => $item) {
+            $producto = Producto::findOrFail($producto_id);
+
+            if ($producto->stock < $item['cantidad']) {
+                return back()->withErrors(['stock' => "Stock insuficiente para el producto {$producto->nombre}."]);
+            }
+
+            $producto->decrement('stock', $item['cantidad']);
+
+            VentaProducto::create([
+                'venta_id' => $venta->id,
+                'producto_id' => $producto_id,
+                'cantidad' => $item['cantidad'],
+            ]);
+        }
+
+        return redirect()->route('ventas.index')->with('success', 'Venta registrada con éxito.');
+    }
 
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Categoria;
 
 class CategoriaController extends Controller
 {
@@ -11,15 +12,15 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        $categorias = Categoria::all();
+        return view('categorias.index', compact('categorias'));
     }
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        return view('categorias.create');
     }
 
     /**
@@ -27,7 +28,15 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255|unique:categorias,nombre',
+        ]);
+
+        Categoria::create([
+            'nombre' => $request->nombre,
+        ]);
+
+        return redirect()->route('categorias.index')->with('success', 'Categoría creada correctamente.');
     }
 
     /**

@@ -17,13 +17,7 @@ return new class extends Migration
     $table->timestamps();
 });
 
-Schema::create('venta_productos', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('venta_id')->constrained();
-    $table->foreignId('producto_id')->constrained();
-    $table->integer('cantidad');
-    $table->timestamps();
-});
+
 
     }
 
@@ -31,7 +25,9 @@ Schema::create('venta_productos', function (Blueprint $table) {
      * Reverse the migrations.
      */
     public function down(): void
-    {
-        Schema::dropIfExists('ventas');
-    }
+{
+   
+    Schema::dropIfExists('ventas');
+}
+
 };
