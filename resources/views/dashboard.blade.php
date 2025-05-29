@@ -51,6 +51,7 @@
                 @endrole
 
                 {{-- CAJERA --}}
+                @role('cajera')
                 <div class="bg-white border border-blue-100 shadow-md hover:shadow-xl rounded-lg p-6 transition duration-300">
                     <h3 class="text-lg font-semibold text-blue-800 mb-4">Ventas</h3>
                     <div class="space-x-2">
@@ -64,7 +65,7 @@
                         </a>
                     </div>
                 </div>
-                @role('cajera')
+                @endrole
             </div>
         </div>
     </div>
