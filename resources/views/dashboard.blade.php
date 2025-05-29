@@ -13,11 +13,11 @@
                 <div class="mt-6 space-y-4">
 
                     {{-- ADMIN --}}
-                    @role('admin')
+                    {{-- @role('admin') --}}
                         <div>
                             <a href="{{ route('usuarios.index') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Gestionar Usuarios</a>
                         </div>
-                    @endrole
+                    {{-- @endrole --}}
 
                     {{-- SECRE --}}
                     @role('secre')

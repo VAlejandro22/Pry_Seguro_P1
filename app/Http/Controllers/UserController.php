@@ -4,10 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
+
+
+
+class UserController extends Controller implements HasMiddleware
 {
+    
+public static function middleware(): array
+    {
+        return [
+            'auth',
+            new Middleware('role:admin|secre', only: ['create', 'store']),
+            
+        ];
+    }
+
     public function index()
 {
     $usuarios = User::with('roles')->get(); // Carga relaciones con los roles

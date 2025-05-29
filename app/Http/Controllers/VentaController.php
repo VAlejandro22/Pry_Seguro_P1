@@ -6,10 +6,21 @@ use Illuminate\Http\Request;
 use App\Models\Venta;
 use App\Models\VentaProducto;
 use App\Models\Producto;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 
-class VentaController extends Controller
+class VentaController extends Controller implements HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+            'auth',
+            new Middleware('role:cajera', only: ['create', 'store']),
+            
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
